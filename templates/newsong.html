@@ -1,0 +1,22 @@
+<html>
+    <body>
+        <h1>Add New Song</h1>
+        <form method="POST" action = "">
+            Song ID <input type = "text" name = "song_id"/><br>
+            Title <input type = "text" name = "title" /> <br>
+            Artist ID ***USE SQL QUERIES TO LIST ALL POSSIBLE ARTISTS TO USE<input type = "text" name = "artist_id" /> <br>
+            Album ID ***USE SQL QUERIES TO LIST ALL POSSIBLE ALBUMS TO USE BASED ON ARTIST ABOVE<input type = "text" name = "album_id" /> <br>
+            Genre <input type = "text" name = "genre" /> <br>
+            Duration <input type = "number" name = "duration" /> <br>
+            Release Year <input type = "number" name = "release_year" /> <br>
+            Track URL <input type = "url" name = "track_url" /> <br>
+            <input type = "submit">
+        </form>
+
+        {% if msg %}
+            <h1>{{ msg }}</h1>
+        {% endif %}
+
+
+    </body>
+</html>

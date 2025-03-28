@@ -1,0 +1,33 @@
+<html>
+    <body>
+        <h1>Generic SQL Query</h1>
+
+        <form method="POST" >
+            SQL Query <input type = "text" name ="sql" />
+            <input type = "submit" >
+        </form>
+
+        {% if result %}
+        <table>
+            <tr>
+                {% for i in attrib %}
+                <th> {{ i }} </th>
+                {% endfor %}
+            </tr>
+
+            {% for row in result %}
+            <tr>
+                {% for i in attrib %}
+                    <td> {{ row[i] }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        {% endif %}
+
+        </table>
+
+
+
+
+    </body>
+</html>

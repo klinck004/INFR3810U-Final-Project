@@ -1,0 +1,17 @@
+<html>
+    <body>
+        <h1> Student Registration</h1>
+        <form method="POST" action = "">
+            ID <input type = "text" name = "id"/><br>
+            Name <input type = "text" name = "name" /> <br>
+            Age <input type = "text" name = "age" /> <br>
+            <input type = "submit">
+        </form>
+
+        {% if msg %}
+            <h1>{{ msg }}</h1>
+        {% endif %}
+
+
+    </body>
+</html>

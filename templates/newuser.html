@@ -1,0 +1,19 @@
+<html>
+    <body>
+        <h1>New User Registration</h1>
+        <form method="POST" action = "">
+            User ID <input type = "text" name = "user_id"/><br>
+            Username <input type = "text" name = "username" /> <br>
+            Email <input type = "email" name = "email" /> <br>
+            Password ***CHANGE THIS LATER <input type = "text" name = "password" /> <br>
+            Profile Picture URL ***IMPLEMENT LATER? <input type = "url" name = "picture" /> <br>
+            <input type = "submit">
+        </form>
+
+        {% if msg %}
+            <h1>{{ msg }}</h1>
+        {% endif %}
+
+
+    </body>
+</html>
