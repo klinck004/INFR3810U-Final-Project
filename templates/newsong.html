@@ -1,11 +1,12 @@
 <html>
     <body>
-        <h1>Add New Song</h1>
+        <h1>Add New Song for {{ artist.name }}</h1>
+        <a href="/manageartist?artist_id={{artist.artist_id}}">Back</a>
+        
         <form method="POST" action = "">
-            Song ID <input type = "text" name = "song_id"/><br>
             Title <input type = "text" name = "title" /> <br>
-            Artist ID ***USE SQL QUERIES TO LIST ALL POSSIBLE ARTISTS TO USE<input type = "text" name = "artist_id" /> <br>
-            Album ID ***USE SQL QUERIES TO LIST ALL POSSIBLE ALBUMS TO USE BASED ON ARTIST ABOVE<input type = "text" name = "album_id" /> <br>
+            Artist Name JOIN ARTIST AND ALBUM TABLES FOR THESE???? <input type = "text" value={{ artist.name }} disabled> <br>
+            Album Name <input type = "text" name = "album_name" disabled/> <br>
             Genre <input type = "text" name = "genre" /> <br>
             Duration <input type = "number" name = "duration" /> <br>
             Release Year <input type = "number" name = "release_year" /> <br>
@@ -17,6 +18,40 @@
             <h1>{{ msg }}</h1>
         {% endif %}
 
+        <h2>{{ artist.name }} Songs</h2>
+        <table id="songs" style="width:50%">
+            WOULD A JOIN WORK BETTER FOR THIS TOO??????
+            MAYBE BC OF THE NEED FOR ARTIST AND ALBUM NAMES IN THE TABLE HERE
+            {% if song %}
+            <tr>
+                <th>Song ID</th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Genre</th>
+                <th>Duration</th>
+                <th>Release Year</th>
+                <th>Track URL</th>
+                <th>Song Info</th>
+            </tr>
+
+            {% for row in song %}
+            <tr>
+                <td>{{ row.song_id }}</td>
+                <td>{{ row.title }}</td>
+                <td>ARTIST NAME POTENTIAL JOIN</td>
+                <td>ALBUM NAME POTENTIAL JOIN</td>
+                <td>{{ row.genre }}</td>
+                <td>{{ row.duration }}</td>
+                <td>{{ row.release_year }}</td>
+                <td>Info Link</td>
+            </tr>
+
+            {% endfor %}
+            {% endif %}
+
+
+        </table>
 
     </body>
 </html>

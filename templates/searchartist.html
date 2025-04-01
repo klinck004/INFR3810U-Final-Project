@@ -1,0 +1,32 @@
+<html>
+    <body>
+        <h1> Search </h1>
+        <form method="POST" action="">
+            Enter something <input type "text" name = "key" />
+            <input type = "submit">
+        </form>
+
+        <h1> Query Results</h1>
+
+        <table id="student" style="width:50%">
+
+            {% if result %}
+            <tr>
+                <th>Artist ID</th>
+                <th>Name</th>
+            </tr>
+
+            {% for row in result %}
+            <tr>
+                <td>{{ row.artist_id }}</td>
+                <td><a href="/manageartist?artist_id={{ row. artist_id}}">{{ row.name }}</a></td>
+            </tr>
+
+            {% endfor %}
+            {% endif %}
+
+
+        </table>
+
+    </body>
+</html>

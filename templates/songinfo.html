@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <h1>{{song.title}}</h1>
+        Artist: {{song.name}}<br>
+
+        {% if song['alb.title'] != None %}
+        Album: {{song['alb.title']}}<br>
+        {% endif %}
+
+        Genre: {{song.genre}}<br>
+        Duration: {{song.duration}}<br>
+        Release Year: {{song.release_year}}<br>
+        Track URL: {{song.track_url}}<br>
+    </body>
+</html>

@@ -1,0 +1,15 @@
+<html>
+    <body>
+        <h1>Add New Album</h1>
+        <form method="POST" action = "">
+            Artist Name <input type = "text" name ="name"/> <br>
+            <input type = "submit">
+        </form>
+
+        {% if msg %}
+            <h1>{{ msg }}</h1>
+        {% endif %}
+
+
+    </body>
+</html>

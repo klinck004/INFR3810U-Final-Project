@@ -1,0 +1,54 @@
+<html>
+    <body>
+        <h1>Manage {{ artist.name }}</h1>
+        <a href="/manageartist?artist_id={{artist.artist_id}}">Back</a>
+        {% if msg %}
+            <h1>{{ msg }}</h1>
+        {% endif %}
+
+        <h2>{{ artist.name }} Albums</h2>
+        <table id="albums" style="width:50%">
+            {% if album %}
+            <tr>
+                <th>Album ID</th>
+                <th>Title</th>
+                <th>Release Year</th>
+                <th>Album Info</th>
+            </tr>
+
+            {% for row in album %}
+            <tr>
+                <td>{{ row.album_id }}</td>
+                <td>{{ row.title }}</td>
+                <td>{{ row.release_year }}</td>
+                <td>Info Link</td>
+            </tr>
+
+            {% endfor %}
+            {% endif %}
+        </table>
+        <a href="\addalbum?artist_id={{artist.artist_id}}">Add New Album</a>
+        <h2>{{ artist.name }} Songs</h2>
+        <table id="songs" style="width:50%">
+            {% if song %}
+            <tr>
+                <th>Song ID</th>
+                <th>Title</th>
+                <th>Release Year</th>
+                <th>Album</th>
+            </tr>
+
+            {% for row in song %}
+            <tr>
+                <td>{{ row.album_id }}</td>
+                <td>{{ row.title }}</td>
+                <td>{{ row.release_year }}</td>
+                <td>{{ row['a.title'] }}</td>
+            </tr>
+
+            {% endfor %}
+            {% endif %}
+        </table>
+        <a href="\addsong?artist_id={{artist.artist_id}}">Add New Song</a>
+    </body>
+</html>
