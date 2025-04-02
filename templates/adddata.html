@@ -1,97 +1,123 @@
-<html>
-    <body>
-        <h1>Add Data</h1>
-        Add new artist/album/song data that is currently not present on the site. <br>
-        <a href="/addartist">Add Artist</a> 
-        <h1> Search Artist/Album/Song </h1>
-        <form method="POST" action="">
-            Search <input type "text" name = "key" />
-            <input name="search_type" type="radio" value="artist" checked="checked">Artist</input>
-            <input name="search_type" type="radio" value="album">Album</input>
-            <input name="search_type" type="radio" value="song">Song</input>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Entry Management</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href=" {{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        {% block head %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+        <div class="container">
+            <div class="container mt-1">
+                <h1>Entry Management</h1>
+                Add new artist/album/song entry that is currently not present on the site. <br>
+                <a href="/addartist" class="btn btn-primary">Add Artist</a>
+            </div>
+            
+            <div class="container d-inline-flex flex-column justify-content-start align-items-start mt-3">
+                <h4> Search Artist/Album/Song </h4>
+                <form method="POST" action="" class="d-inline-flex flex-column justify-content-start align-items-start mt-3">
+                    <label for="search" class="form-label">Search</label>
+                    <input type="text" id="search" name="key" class="form-control"/>
+                    <div class="container">
+                        <input name="search_type" type="radio" value="artist" checked="checked" class="form-check-input">Artist</input>
+                        <input name="search_type" type="radio" value="album" class="form-check-input">Album</input>
+                        <input name="search_type" type="radio" value="song" class="form-check-input">Song</input>
+                    </div>
+                    <input type = "submit" class="btn btn-primary">
+                </form>
+            </div> 
+            {% if search_type == "artist" %}
+            <table id="results" style="width:50%" class="table mt-1">
+            
+                {% if result %}
+                <tr>
+                    <th>Artist ID</th>
+                    <th>Name</th>
+                    <th>Options</th>
+                </tr>
 
-            <input type = "submit">
-        </form>
+                {% for row in result %}
+                <tr>
+                    <td>{{ row.artist_id }}</td>
+                    <td>{{ row.artist_name }}</td>
+                    <td><a href="/manageartist?artist_id={{ row. artist_id}}" class="btn btn-primary">Manage Artist</a></td>
+                </tr>
 
-        <h1> Query Results</h1>
+                {% endfor %}
+                {% endif %}
+            </table>
+            {% elif search_type == "album" %}
+            <table id="results" style="width:50%" class="table mt-1">
+            
+                {% if result %}
+                <tr>
+                    <th>Album ID</th>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Release Year</th>
+                    <th>Options</th>
+                </tr>
 
-        {% if search_type == "artist" %}
-        <table id="results" style="width:50%">
-        
-            {% if result %}
-            <tr>
-                <th>Artist ID</th>
-                <th>Name</th>
-                <th>Options</th>
-            </tr>
+                {% for row in result %}
+                <tr>
+                    <td>{{ row.album_id }}</td>
+                    <td>{{ row.album_title }}</td>
+                    <td>{{ row.album_genre }}</td>
+                    <td><a href="/manageartist?artist_id={{row. artist_id}}">{{ row.name }}</a></td>
+                    <td>{{ row.album_release_year }}</td>
+                    <td><a href="/editalbum?album_id={{row.album_id}}" class="btn btn-primary">Edit Album</a></td>
+                </tr>
 
-            {% for row in result %}
-            <tr>
-                <td>{{ row.artist_id }}</td>
-                <td>{{ row.name }}</td>
-                <td><a href="/manageartist?artist_id={{ row. artist_id}}">Manage Artist</a></td>
-            </tr>
+                {% endfor %}
+                {% endif %}
+            </table>
+            {% elif search_type == "song" %}
+            <table id="results" style="width:50%" class="table mt-1">
+            
+                {% if result %}
+                <tr>
+                    <th>Song ID</th>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th>Genre</th>
+                    <th>Duration</th>
+                    <th>Release Year</th>
+                    <th>Track URL</th>
+                    <th>Options</th>
+                </tr>
 
-            {% endfor %}
+                {% for row in result %}
+                <tr>
+                    <td>{{ row.song_id }}</td>
+                    <td>{{ row.song_title }}</td>
+                    <td><a href="/manageartist?artist_id={{row. artist_id}}">{{ row.name }}</a></td>
+                    <td><a href="/editalbum?album_id={{row.album_id}}">{{ row.album_title }}</a></td>
+                    <td>{{ row.song_genre }}</td>
+                    <td>{{ row.duration }}</td>
+                    <td>{{ row.song_release_year }}</td>
+                    <td>{{ row.track_url }}</td>
+                    <td><a href="/editsong?song_id={{row.song_id}}" class="btn btn-primary">Edit Song</a></td>
+                </tr>
+
+                {% endfor %}
+                {% endif %}
+            </table>
             {% endif %}
-        </table>
-        {% elif search_type == "album" %}
-        <table id="results" style="width:50%">
-        
-            {% if result %}
-            <tr>
-                <th>Album ID</th>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Release Year</th>
-                <th>Options</th>
-            </tr>
-
-            {% for row in result %}
-            <tr>
-                <td>{{ row.album_id }}</td>
-                <td>{{ row.title }}</td>
-                <td><a href="/manageartist?artist_id={{row. artist_id}}">{{ row.name }}</a></td>
-                <td>{{ row.release_year }}</td>
-                <td><a href="/editalbum?album_id={{row.album_id}}">Edit Album</a></td>
-            </tr>
-
-            {% endfor %}
-            {% endif %}
-        </table>
-        {% elif search_type == "song" %}
-        <table id="results" style="width:50%">
-        
-            {% if result %}
-            <tr>
-                <th>Song ID</th>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Genre</th>
-                <th>Duration</th>
-                <th>Release Year</th>
-                <th>Track URL</th>
-                <th>Options</th>
-            </tr>
-
-            {% for row in result %}
-            <tr>
-                <td>{{ row.song_id }}</td>
-                <td>{{ row.song_title }}</td>
-                <td><a href="/manageartist?artist_id={{row. artist_id}}">{{ row.name }}</a></td>
-                <td><a href="/editalbum?album_id={{row.album_id}}">{{ row.album_title }}</a></td>
-                <td>{{ row.genre }}</td>
-                <td>{{ row.duration }}</td>
-                <td>{{ row.release_year }}</td>
-                <td>{{ row.track_url }}</td>
-                <td><a href="/editsong?song_id={{row.song_id}}">Edit Song</a></td>
-            </tr>
-
-            {% endfor %}
-            {% endif %}
-        </table>
-        {% endif %}
-           
+        </div>  
     </body>
 </html>

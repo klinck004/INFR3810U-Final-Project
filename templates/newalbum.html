@@ -1,44 +1,54 @@
-<html>
-    <body>
-        <h1>Add New Album for {{ artist.name }}</h1>
-        <a href="/manageartist?artist_id={{artist.artist_id}}">Back</a>
-
-        <form method="POST" action = "">
-            Artist ID <input type = "text" value={{ artist.artist_id }} disabled> <br>
-            Artist Name <input type = "text" value={{ artist.name }} disabled> <br>
-            Title <input type = "text" name = "title" /> <br>
-            Release Year <input type = "number" name = "release_year" /> <br>
-            <input type = "submit">
-        </form>
-
-        {% if msg %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Add New Album for {{ artist.artist_name }}</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href=" {{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body id="page-top">        
+        {% block head %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+        <div class="container mt-1 d-flex flex-column justify-content-start align-items-start">
+            {% if msg == "Success" %}
+            <h1>Album successfully added.</h1>
+            <div class="container d-flex align-items-start">
+                <a href="/manageartist?artist_id={{artist.artist_id}}" class="btn btn-primary m-1">Return to Manage {{artist.artist_name}}</a>
+                <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
+            </div>
+            {% elif msg %}
             <h1>{{ msg }}</h1>
-        {% endif %}
-
-        <h2>{{ artist.name }} Albums</h2>
-        <table id="albums" style="width:50%">
-
-            {% if album %}
-            <tr>
-                <th>Album ID</th>
-                <th>Title</th>
-                <th>Release Year</th>
-                <th>Album Info</th>
-            </tr>
-
-            {% for row in album %}
-            <tr>
-                <td>{{ row.album_id }}</td>
-                <td>{{ row.title }}</td>
-                <td>{{ row.release_year }}</td>
-                <td>Info Link</td>
-            </tr>
-
-            {% endfor %}
+            <div class="container d-flex align-items-start">
+                <a href="/addartist" class="btn btn-primary m-1">Try again</a>
+                <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
+            </div>
+            {% else %}
+            <h1>Add New Album</h1>
+            <div class="container d-flex align-items-start">
+                <a href="/manageartist?artist_id={{artist.artist_id}}" class="btn btn-primary m-1">Return to Manage {{artist.artist_name}}</a>
+                <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
+            </div>
+            <form method="POST" action = "">
+                <label for="title" class="form-label">Title</label>
+                <input id="title" type = "text" name ="title" class="form-control"/> <br>
+                <label for="genre" class="form-label">Genre</label>
+                <input id="genre" type = "text" name ="genre" class="form-control"/> <br>
+                <label for="release_year" class="form-label">Release Year</label>
+                <input id="release_year" type = "number" name ="release_year" class="form-control"/> <br>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
             {% endif %}
-
-
-        </table>
-
+        </div>
     </body>
-</html>
+</html> 

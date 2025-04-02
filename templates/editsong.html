@@ -1,0 +1,29 @@
+<html>
+    <body>
+        <h1>Edit {{song.song_title}}</h1>
+        <form method="POST" id="edit_song">
+            <label for="song_title">Title: </label>
+            <input type="text" id="song_title" name="song_title" value="{{song.song_title}}"><br>
+            <label for="song_genre">Genre: </label>
+            <input type="text" id="song_genre" name="song_genre" value="{{song.song_genre}}"><br>
+            <label for="song_release_year">Release Year: </label>
+            <input type="text" id="song_release_year" name="song_release_year" value="{{song.song_release_year}}"><br>
+            <label for="duration">Duration: </label>
+            <input type="number" id="duration" name="duration" value="{{song.duration}}"><br>
+            <label for="track_url">Track URL: </label>
+            <input type="URL" id="track_url" name="track_url" value="{{song.track_url}}"><br>
+            <input type="hidden" name="edit_song">
+            <button type="submit" for="edit_song">Submit</button>
+        </form>
+        <form method="post" id="delete_song">
+            <input type="hidden" name="del_song">
+            <button type="submit" for="delete_song">Delete Song</button>
+        </form>
+        
+        {% if msg %}
+            <h1>{{ msg }}</h1>
+        {% endif %}
+
+
+    </body>
+</html>

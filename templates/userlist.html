@@ -5,9 +5,8 @@
         <a href="/edituser">Edit Information</a>
         <a href="/editlist?user_id={{user.user_id}}">Edit List</a>
         
+        {% if result %}
         <table id="results" style="width:50%">
-        
-            {% if result %}
             <tr>
                 <th>Song</th>
                 <th>Artist</th>
@@ -18,17 +17,24 @@
 
             {% for row in result %}
             <tr>
-                <td><a href="/songinfo?song_info={{row.song_id}}">{{ row.song_title }}</a></td>
-                <td>{{ row.name }}</td>
-                <td>{{ row.album_name }}</td>
+                <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
+                <td><a href="/artistinfo?artist_id={{row.artist_id}}">{{ row.artist_name }}</a></td>
+                <td>
+                    {% if row.album_title != None%}
+                    <a href="/albuminfo?album_id={{row.album_id}}">{{ row.album_title }}</a>
+                    {%else%} 
+                    N/A 
+                    {%endif%}
+                </td>
                 <td>{{ row.note }}</td>
                 <td>{{ row.date_added }}</td>
             </tr>
 
             {% endfor %}
-            {% endif %}
         </table>
-       
+        {% else %}
+        <br>List is empty
+        {% endif %}
            
     </body>
 </html>

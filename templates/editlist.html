@@ -1,0 +1,88 @@
+<html>
+    <body>
+        <h1>Edit List</h1>
+        {% if list %}
+        <table id="results" style="width:50%">
+            <tr>
+                <th>Song</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Note</th>
+                <th>Date Added</th>
+                <th>Options</th>
+            </tr>
+
+            {% for row in list %}
+            <tr>
+                <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
+                <td><a href="/artistinfo?artist_id={{row.artist_id}}">{{ row.name }}</a></td>
+                <td>
+                    {% if row.album_title != None%}
+                    <a href="/albuminfo?album_id={{row.album_id}}">{{ row.album_title }}</a>
+                    {%else%} 
+                    N/A 
+                    {%endif%}
+                </td>
+                <td>{{ row.note }}</td>
+                <td>{{ row.date_added }}</td>
+                <td>
+                    <form method="post" id="form2">
+                        <input type="hidden" name="del_song_id" value="{{ row.song_id }}">
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+
+            {% endfor %}
+        </table>
+        {% else %}
+        List is empty
+        {% endif %}
+        
+        <form method="POST" action="">
+            <br> Search songs: <input type="text" name = "search_str" />
+        </form>
+        
+        <table id="search_result" style="width:50%">
+        
+            {% if search_result %}
+            <tr>
+                <th>Song ID</th>
+                <th>Title</th>
+                <th>Artist</th>
+                <th>Album</th>
+                <th>Genre</th>
+                <th>Duration</th>
+                <th>Release Year</th>
+                <th>Track URL</th>
+                <th>Options</th>
+            </tr>
+
+            {% for row in search_result %}
+            <tr>
+                <td>{{ row.song_id }}</td>
+                <td>{{ row.song_title }}</td>
+                <td><a href="/manageartist?artist_id={{row.artist_id}}">{{ row.name }}</a></td>
+                <td><a href="/editalbum?album_id={{row.album_id}}">{{ row.album_title }}</a></td>
+                <td>{{ row.song_genre }}</td>
+                <td>{{ row.duration }}</td>
+                <td>{{ row.song_release_year }}</td>
+                <td>{{ row.track_url }}</td>
+                <td>
+                    <form method="post" id="form1">
+                        <input type="hidden" name="song_id" value="{{ row.song_id }}">
+                        <button type="submit">Add</button>
+                    </form>
+                </td>
+                
+            </tr>
+
+            {% endfor %}
+            {% endif %}
+        </table>
+        {% if action_result %}
+        <br>{{action_result}}
+        {% endif %}
+           
+    </body>
+</html>

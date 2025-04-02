@@ -1,0 +1,50 @@
+<html>
+    <body>
+        <h1>Edit {{album.album_title}}</h1>
+        <form method="POST" id="edit_album">
+            <label for="album_title">Title: </label>
+            <input type="text" id="album_title" name="album_title" value="{{album.album_title}}"><br>
+            <label for="album_genre">Genre: </label>
+            <input type="text" id="album_genre" name="album_genre" value="{{album.album_genre}}"><br>
+            <label for="album_release_year">Release Year: </label>
+            <input type="text" id="album_release_year" name="album_release_year" value="{{album.album_release_year}}"><br>
+            <input type="hidden" name="edit_album">
+            <button type="submit" for="edit_album">Submit</button>
+        </form>
+        <form method="post" id="delete_album">
+            <input type="hidden" name="del_artist">
+            <button type="submit" for="delete_album">Delete Album</button>
+        </form>
+        
+        <h3>Songs:</h3>
+        <table id="songs" style="width:50%">
+            {% if song %}
+            <tr>
+                <th>Song ID</th>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Release Year</th>
+                <th>Options</th>
+            </tr>
+
+            {% for row in song %}
+            <tr>
+                <td>{{ row.song_id }}</td>
+                <td>{{ row.song_title }}</td>
+                <td>{{ row.song_genre }}</td>
+                <td>{{ row.song_release_year }}</td>
+                <td><a href="/editsong?song_id={{row.song_id}}">Edit Song</a></td>
+            </tr>
+
+            {% endfor %}
+            {% else %}
+            No Songs
+            {% endif %}
+        </table>
+        <a href="/addsong?artist_id={{album.artist_id}}&album_id={{album.album_id}}">Add Song to Album</a>
+        {% if msg %}
+            <h1>{{ msg }}</h1>
+        {% endif %}
+
+    </body>
+</html>

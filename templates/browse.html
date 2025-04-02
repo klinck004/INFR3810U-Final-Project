@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Freelancer - Start Bootstrap Theme</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href=" {{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        {% block head %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+        <div class="container mt-1">
+            <h4> Search Users/Artist/Album/Song </h4>
+            <form method="POST" action="">
+                Search <input type="text" name = "key" />
+                <input name="search_type" type="radio" value="user" checked="checked">Users</input>
+                <input name="search_type" type="radio" value="artist">Artists</input>
+                <input name="search_type" type="radio" value="album">Albums</input>
+                <input name="search_type" type="radio" value="song">Songs</input>
+
+                <input type = "submit">
+            </form>
+        </div> 
+        <div class="container mt-1">
+            {% if search_type == "artist" %}
+            <table id="search_results" style="width:50%">
+            
+                {% if search_result %}
+                <tr>
+                    <th>Name</th>
+                    <th>Options</th>
+                </tr>
+
+                {% for row in search_result %}
+                <tr>
+                    <td>{{ row.artist_name }}</td>
+                    <td><a href="/artistinfo?artist_id={{ row. artist_id}}">View Artist</a></td>
+                </tr>
+
+                {% endfor %}
+                {% endif %}
+            </table>
+            {% elif search_type == "album" %}
+            <table id="search_results" style="width:50%">
+            
+                {% if search_result %}
+                <tr>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Genre</th>
+                    <th>Release Year</th>
+                </tr>
+
+                {% for row in search_result %}
+                <tr>
+                    <td><a href="/albuminfo?album_id={{row.album_id}}">{{ row.album_title }}</a></td>
+                    <td><a href="/artistinfo?artist_id={{row. artist_id}}">{{ row.artist_name }}</a></td>
+                    <td>{{ row.album_genre }}</td>
+                    <td>{{ row.album_release_year }}</td>
+                </tr>
+
+                {% endfor %}
+                {% endif %}
+            </table>
+            {% elif search_type == "song" %}
+            <table id="search_results" style="width:50%">
+            
+                {% if search_result %}
+                <tr>
+                    <th>Title</th>
+                    <th>Artist</th>
+                    <th>Album</th>
+                    <th>Genre</th>
+                    <th>Duration</th>
+                    <th>Release Year</th>
+                    <th>Track URL</th>
+                </tr>
+
+                {% for row in search_result %}
+                <tr>
+                    <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
+                    <td><a href="/artistinfo?artist_id={{row. artist_id}}">{{ row.artist_name }}</a></td>
+                    <td><a href="/albuminfo?album_id={{row.album_id}}">{{ row.album_title }}</a></td>
+                    <td>{{ row.song_genre }}</td>
+                    <td>{{ row.duration }}</td>
+                    <td>{{ row.song_release_year }}</td>
+                    <td>{{ row.track_url }}</td>
+                </tr>
+
+                {% endfor %}
+                {% endif %}
+            </table>
+            {% elif search_type == "user" %}
+            <table id="search_results" style="width:50%">
+            
+                {% if search_result %}
+                <tr>
+                    <th>Username</th>
+                </tr>
+
+                {% for row in search_result %}
+                <tr>
+                    <td><a href="/userlist?user_id={{row.user_id}}">{{ row.username }}</a></td>
+                </tr>
+
+                {% endfor %}
+                {% endif %}
+            </table>
+            {% endif %}
+        </div>
+    </body>
+</html>

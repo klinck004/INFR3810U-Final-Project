@@ -1,7 +1,33 @@
 <html>
     <body>
-        <h1>{{album.title}}</h1>
-        Artist: {{album.name}}<br>
-        Release Year: {{album.release_year}}<br>
+        <h1>{{album.album_title}}</h1>
+        Artist: <a href="/artistinfo?artist_id={{album.artist_id}}">{{album.artist_name}}</a><br>
+        Genre: {{album.album_genre}}<br>
+        Release Year: {{album.album_release_year}}<br>
+        <h3>Songs:</h3>
+        <table id="songs" style="width:50%">
+            {% if song %}
+            <tr>
+                <th>Title</th>
+                <th>Genre</th>
+                <th>Duration</th>
+                <th>Release Year</th>
+                <th>Track URL</th>
+            </tr>
+
+            {% for row in song %}
+            <tr>
+                <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
+                <td>{{ row.song_genre }}</td>
+                <td>{{ row.duration }}</td>
+                <td>{{ row.song_release_year }}</td>
+                <td>{{ row.track_url }}</td>
+            </tr>
+
+            {% endfor %}
+            {% else %}
+            No Songs
+            {% endif %}
+        </table>
     </body>
 </html>

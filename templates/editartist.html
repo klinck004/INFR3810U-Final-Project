@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Add New Artist</title>
+        <title>Edit {{artist.artist_name}}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -21,26 +21,25 @@
         {% include 'navbar.html' %}
         {% endblock %}
         <div class="container mt-1 d-flex flex-column justify-content-start align-items-start">
-            {% if msg == "Success" %}
-            <h1>Artist successfully added.</h1>
-            <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
-            {% elif msg %}
+            {% if msg %}
             <h1>{{ msg }}</h1>
-            <div class="container d-flex align-items-start">
-                <a href="/addartist" class="btn btn-primary m-1">Try again</a>
-                <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
-            </div>
+            <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
             {% else %}
-            <h1>Add New Artist</h1>
+            
+            <h1>Edit {{artist.artist_name}}</h1>
             <div class="container d-flex align-items-start">
-                <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
+                <a href="/manageartist?artist_id={{artist.artist_id}}" class="btn btn-secondary m-1">Return to Artist Management</a>
             </div>
             <form method="POST" action = "">
-                <label for="name" class="form-label">Artist Name</label>
+                <label for="name" class="form-label">New Name</label>
                 <input id="name" type = "text" name ="name" class="form-control"/> <br>
                 <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+            <form method="post" id="form2">
+                <input type="hidden" name="del_artist">
+                <button type="submit" class="btn btn-danger">Delete Artist</button>
             </form>
             {% endif %}
         </div>
     </body>
-</html> 
+</html>

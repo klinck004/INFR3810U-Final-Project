@@ -1,57 +1,64 @@
-<html>
-    <body>
-        <h1>Add New Song for {{ artist.name }}</h1>
-        <a href="/manageartist?artist_id={{artist.artist_id}}">Back</a>
-        
-        <form method="POST" action = "">
-            Title <input type = "text" name = "title" /> <br>
-            Artist Name JOIN ARTIST AND ALBUM TABLES FOR THESE???? <input type = "text" value={{ artist.name }} disabled> <br>
-            Album Name <input type = "text" name = "album_name" disabled/> <br>
-            Genre <input type = "text" name = "genre" /> <br>
-            Duration <input type = "number" name = "duration" /> <br>
-            Release Year <input type = "number" name = "release_year" /> <br>
-            Track URL <input type = "url" name = "track_url" /> <br>
-            <input type = "submit">
-        </form>
-
-        {% if msg %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Add New Song for {{ artist.artist_name }}</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href=" {{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body id="page-top">        
+        {% block head %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+        <div class="container mt-1 d-flex flex-column justify-content-start align-items-start">
+            {% if msg == "Success" %}
+            <h1>Song successfully added.</h1>
+            <div class="container d-flex align-items-start">
+                <a href="/manageartist?artist_id={{artist.artist_id}}" class="btn btn-primary m-1">Return to Manage {{artist.artist_name}}</a>
+                <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
+            </div>
+            {% elif msg %}
             <h1>{{ msg }}</h1>
-        {% endif %}
-
-        <h2>{{ artist.name }} Songs</h2>
-        <table id="songs" style="width:50%">
-            WOULD A JOIN WORK BETTER FOR THIS TOO??????
-            MAYBE BC OF THE NEED FOR ARTIST AND ALBUM NAMES IN THE TABLE HERE
-            {% if song %}
-            <tr>
-                <th>Song ID</th>
-                <th>Title</th>
-                <th>Artist</th>
-                <th>Album</th>
-                <th>Genre</th>
-                <th>Duration</th>
-                <th>Release Year</th>
-                <th>Track URL</th>
-                <th>Song Info</th>
-            </tr>
-
-            {% for row in song %}
-            <tr>
-                <td>{{ row.song_id }}</td>
-                <td>{{ row.title }}</td>
-                <td>ARTIST NAME POTENTIAL JOIN</td>
-                <td>ALBUM NAME POTENTIAL JOIN</td>
-                <td>{{ row.genre }}</td>
-                <td>{{ row.duration }}</td>
-                <td>{{ row.release_year }}</td>
-                <td>Info Link</td>
-            </tr>
-
-            {% endfor %}
+            <div class="container d-flex align-items-start">
+                <a href="/addartist" class="btn btn-primary m-1">Try again</a>
+                <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
+            </div>
+            {% else %}
+            <h1>Add New Song</h1>
+            <div class="container d-flex align-items-start">
+                <a href="/manageartist?artist_id={{artist.artist_id}}" class="btn btn-primary m-1">Return to Manage {{artist.artist_name}}</a>
+                <a href="/adddata" class="btn btn-secondary m-1">Return to Entry Management</a>
+            </div>
+            <form method="POST" action = "">
+                <label for="title" class="form-label">Title</label>
+                <input id="title" type = "text" name ="title" class="form-control"/> 
+                <label for="album" class="form-label">Album</label>
+                <select id="album" name="album_id" class="form-control">
+                    {% for row in album %}
+                    <option value="{{row.album_id}}">{{row.album_title}}, ID: {{row.album_id}}</option>
+                    {% endfor %}             
+                </select>
+                <label for="genre" class="form-label">Genre</label>
+                <input id="genre" type = "text" name ="genre" class="form-control"/> 
+                <label for="duration" class="form-label">Duration</label>
+                <input id="duration" type = "text" name ="duration" class="form-control"/> 
+                <label for="release_year" class="form-label">Release Year</label>
+                <input id="release_year" type = "number" name ="release_year" class="form-control"/>
+                <label for="track_url" class="form-label">Track URL</label>
+                <input id="track_url" type = "URL" name ="track_url" class="form-control"/>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
             {% endif %}
-
-
-        </table>
-
+        </div>
     </body>
-</html>
+</html> 
