@@ -1,18 +1,37 @@
-<html>
-    <body>
-        <h1>New User Registration</h1>
-        <form method="POST" action = "">
-            Username <input type = "text" name = "username" /> <br>
-            Email <input type = "email" name = "email" /> <br>
-            Password ***CHANGE THIS LATER <input type = "text" name = "password" /> <br>
-            Profile Picture URL ***IMPLEMENT LATER? <input type = "url" name = "picture" /> <br>
-            <input type = "submit">
-        </form>
-
-        {% if msg %}
-            <h1>{{ msg }}</h1>
-        {% endif %}
-
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>New User Registration</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href=" {{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        {% block head %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+        <div class="container mt-1">
+            <h1>New User Registration</h1>
+            <form method="POST" action = "">
+                Username <input type = "text" name = "username" /> <br>
+                Email <input type = "email" name = "email" /> <br>
+                Password <input type = "password" name = "password" /> <br>
+                <input type = "submit" class="btn btn-primary">
+            </form>
+            {% if msg %}
+                <h1>{{ msg }}</h1>
+            {% endif %}
+        </div>
 
     </body>
 </html>

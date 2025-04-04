@@ -384,7 +384,7 @@ class Database:
         result = ""
         if type == "list":
             try:
-                self.cur.execute("SELECT username, song_title, artist_name, album_title, date_added FROM User_List as ul JOIN Users as u ON ul.user_id=u.user_id JOIN Songs as s ON ul.song_id=s.song_id JOIN Artists as art ON s.artist_id=art.artist_id LEFT JOIN Albums as alb on s.album_id=alb.album_id ORDER BY date_added DESC LIMIT 20")
+                self.cur.execute("SELECT username, u.user_id, song_title, s.song_id, artist_name, art.artist_id, album_title, alb.album_id, date_added FROM User_List as ul JOIN Users as u ON ul.user_id=u.user_id JOIN Songs as s ON ul.song_id=s.song_id JOIN Artists as art ON s.artist_id=art.artist_id LEFT JOIN Albums as alb on s.album_id=alb.album_id ORDER BY date_added DESC LIMIT 20")
                 result = self.cur.fetchall()
             finally:
                 self.con.close()
@@ -429,8 +429,12 @@ def search_song_for_list():
     search_result = ""
     action_result = ""
     list_result = ""
+    user_result = ""
     db = Database()
     list_result = db.user_list(user_id)
+    print(list_result)
+    db = Database()
+    user_result = db.user_info(user_id)[0]
     if request.method == 'POST':
         data = request.form
         print(data)
@@ -451,7 +455,7 @@ def search_song_for_list():
         db = Database()
         list_result = db.user_list(user_id)
 
-    return render_template('editlist.html', search_result=search_result, action_result=action_result, list=list_result)
+    return render_template('editlist.html', search_result=search_result, action_result=action_result, list=list_result, user=user_result)
 
 @app.route('/addentry', methods=['GET','POST'])
 def add_entry():

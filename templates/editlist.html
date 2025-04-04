@@ -1,8 +1,32 @@
-<html>
-    <body>
-        <h1>Edit List</h1>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Edit {{user.username}}'s List</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href=" {{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        {% block head %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+        <div class="container mt-1">
+        <h1>Edit {{user.username}}'s List</h1>
+        <div class="container d-flex align-items-start">
+            <a href="/userlist?user_id={{user.user_id}}" class="btn btn-primary m-1">Return to List</a>
+        </div>
         {% if list %}
-        <table id="results" style="width:50%">
+        <table id="results" style="width:50%" class="table">
             <tr>
                 <th>Song</th>
                 <th>Artist</th>
@@ -15,7 +39,7 @@
             {% for row in list %}
             <tr>
                 <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
-                <td><a href="/artistinfo?artist_id={{row.artist_id}}">{{ row.name }}</a></td>
+                <td><a href="/artistinfo?artist_id={{row.artist_id}}">{{ row.artist_name }}</a></td>
                 <td>
                     {% if row.album_title != None%}
                     <a href="/albuminfo?album_id={{row.album_id}}">{{ row.album_title }}</a>
@@ -28,7 +52,7 @@
                 <td>
                     <form method="post" id="form2">
                         <input type="hidden" name="del_song_id" value="{{ row.song_id }}">
-                        <button type="submit">Remove</button>
+                        <button type="submit" class="btn btn-danger">Remove</button>
                     </form>
                 </td>
             </tr>
@@ -43,11 +67,10 @@
             <br> Search songs: <input type="text" name = "search_str" />
         </form>
         
-        <table id="search_result" style="width:50%">
+        <table id="search_result" style="width:50%" class="table">
         
             {% if search_result %}
             <tr>
-                <th>Song ID</th>
                 <th>Title</th>
                 <th>Artist</th>
                 <th>Album</th>
@@ -60,10 +83,15 @@
 
             {% for row in search_result %}
             <tr>
-                <td>{{ row.song_id }}</td>
-                <td>{{ row.song_title }}</td>
-                <td><a href="/manageartist?artist_id={{row.artist_id}}">{{ row.name }}</a></td>
-                <td><a href="/editalbum?album_id={{row.album_id}}">{{ row.album_title }}</a></td>
+                <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
+                <td><a href="/artistinfo?artist_id={{row.artist_id}}">{{ row.artist_name }}</a></td>
+                <td>
+                    {% if row.album_title != None%}
+                    <a href="/albuminfo?album_id={{row.album_id}}">{{ row.album_title }}</a>
+                    {%else%} 
+                    N/A 
+                    {%endif%}
+                </td>
                 <td>{{ row.song_genre }}</td>
                 <td>{{ row.duration }}</td>
                 <td>{{ row.song_release_year }}</td>
@@ -71,7 +99,7 @@
                 <td>
                     <form method="post" id="form1">
                         <input type="hidden" name="song_id" value="{{ row.song_id }}">
-                        <button type="submit">Add</button>
+                        <button type="submit" class="btn btn-primary">Add to List</button>
                     </form>
                 </td>
                 

@@ -1,33 +1,55 @@
-<html>
-    <body>
-        <h1>{{album.album_title}}</h1>
-        Artist: <a href="/artistinfo?artist_id={{album.artist_id}}">{{album.artist_name}}</a><br>
-        Genre: {{album.album_genre}}<br>
-        Release Year: {{album.album_release_year}}<br>
-        <h3>Songs:</h3>
-        <table id="songs" style="width:50%">
-            {% if song %}
-            <tr>
-                <th>Title</th>
-                <th>Genre</th>
-                <th>Duration</th>
-                <th>Release Year</th>
-                <th>Track URL</th>
-            </tr>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>{{album.album_title}} by {{album.artist_name}}</title>
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href=" {{ url_for('static', filename='css/styles.css') }}" rel="stylesheet" />
+    </head>
+    <body id="page-top">
+        {% block head %}
+        {% include 'navbar.html' %}
+        {% endblock %}
+        <div class="container">
+            <h1>{{album.album_title}}</h1>
+            Artist: <a href="/artistinfo?artist_id={{album.artist_id}}">{{album.artist_name}}</a><br>
+            Genre: {{album.album_genre}}<br>
+            Release Year: {{album.album_release_year}}<br>
+            <h3>Songs:</h3>
+            <table id="songs" style="width:50%" class="table">
+                {% if song %}
+                <tr>
+                    <th>Title</th>
+                    <th>Genre</th>
+                    <th>Duration</th>
+                    <th>Release Year</th>
+                    <th>Track URL</th>
+                </tr>
 
-            {% for row in song %}
-            <tr>
-                <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
-                <td>{{ row.song_genre }}</td>
-                <td>{{ row.duration }}</td>
-                <td>{{ row.song_release_year }}</td>
-                <td>{{ row.track_url }}</td>
-            </tr>
+                {% for row in song %}
+                <tr>
+                    <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
+                    <td>{{ row.song_genre }}</td>
+                    <td>{{ row.duration }}</td>
+                    <td>{{ row.song_release_year }}</td>
+                    <td><a href="{{row.track_url}}">{{ row.track_url }}</a></td>
+                </tr>
 
-            {% endfor %}
-            {% else %}
-            No Songs
-            {% endif %}
-        </table>
+                {% endfor %}
+                {% else %}
+                No Songs
+                {% endif %}
+            </table>
+        </div>
     </body>
 </html>

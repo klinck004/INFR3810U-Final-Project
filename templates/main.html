@@ -22,7 +22,7 @@
         {% endblock %}
         <div class="container">
             <h1>Recently Added To Lists:</h1>
-            <table id="list" style="width:50%">
+            <table id="list" style="width:50%" class="table">
                 {% if browse %}
                 <tr>
                     <th>User</th>
@@ -33,10 +33,12 @@
     
                 {% for row in browse %}
                 <tr>
-                    <td>{{ row.username }}</td>
-                    <td>{{ row.song_title }}</td>
-                    <td>{{ row.artist_name }}</td>
-                    <td>{{ row.album_title }}</td>
+                    <td><a href="/userlist?user_id={{row.user_id}}">{{ row.username }}</a></td>
+                    <td><a href="/songinfo?song_id={{row.song_id}}">{{ row.song_title }}</a></td>
+                    <td><a href="/artistinfo?artist_id={{row.artist_id}}">{{ row.artist_name }}</a></td>
+                    {%if row.album_title != None%}
+                    <td><a href="/albuminfo?album_id={{row.album_id}}">{{ row.album_title }}</a></td>
+                    {%endif%}
                 </tr>
     
                 {% endfor %}
